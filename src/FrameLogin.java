@@ -8,6 +8,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.text.JTextComponent;
 
+import database.signupDAO;
+import database.signupDTO;
+
 import java.awt.Color;
 import java.awt.Rectangle;
 import javax.swing.JTextField;
@@ -39,20 +42,25 @@ public class FrameLogin extends JFrame {
 	
 	private MainProcess main;
 	private FrameMain f_main;
-	/**
-	 * Launch the application.
-	 */
+	
+	String password;
+	signupDTO signupdto;
+	signupDAO signupdao;
+	
 	public static void main(String[] args) {
+		
 	}
-
+	
 	/**
 	 * Create the frame.
 	 */
 	public FrameLogin() {
 		setUndecorated(true);
+		signupdto = new signupDTO();
+		signupdao = new signupDAO();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 400);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.ORANGE);
 		contentPane.setInheritsPopupMenu(true);
@@ -62,11 +70,13 @@ public class FrameLogin extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(180, 154, 250, 40);
+		panel.setBounds(280, 263, 250, 40);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		txtUserName = new JTextField();
+		txtUserName.setBounds(12, 10, 170, 20);
+		panel.add(txtUserName);
 		txtUserName.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent arg0) {
@@ -86,14 +96,12 @@ public class FrameLogin extends JFrame {
 		txtUserName.setBorder(null);
 		txtUserName.setFont(new Font("Arial", Font.PLAIN, 15));
 		txtUserName.setText("Username");
-		txtUserName.setBounds(14, 10, 170, 20);
-		panel.add(txtUserName);
 		txtUserName.setColumns(10);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setLayout(null);
 		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(180, 206, 250, 40);
+		panel_1.setBounds(280, 313, 250, 40);
 		contentPane.add(panel_1);
 		
 		txtPassword = new JPasswordField();
@@ -102,7 +110,7 @@ public class FrameLogin extends JFrame {
 			@Override
 			public void focusGained(FocusEvent arg0) {
 				if(txtPassword.getText().equals("Password")) {
-					txtPassword.setEchoChar('��');
+					txtPassword.setEchoChar('*');
 					txtPassword.setText("");
 				}
 				else {
@@ -127,31 +135,22 @@ public class FrameLogin extends JFrame {
 		pnlBtnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(txtUserName.getText().equals("admin") && txtPassword.getText().equals("admin123")) {
-					lblloginMessage.setText("");
-					JOptionPane.showMessageDialog(null, "Login Successful!");
-					main.showFrameMain();
-					
-				}
-				else if(txtUserName.getText().equals("") || txtUserName.getText().equals("Username") ||
-						txtPassword.getText().equals("") || txtPassword.getText().equals("Password")) {
-					lblloginMessage.setText("Please input all requirements!");
-				}
-				else
-					lblloginMessage.setText("Username and password didn't match!");
+				contentSet();
+				contentClear();
 			}
 		});
 		pnlBtnLogin.setBorder(null);
 		pnlBtnLogin.setForeground(Color.WHITE);
 		pnlBtnLogin.setBackground(new Color(255, 165, 0));
-		pnlBtnLogin.setBounds(180, 289, 250, 50);
+		pnlBtnLogin.setBounds(280, 429, 250, 40);
 		contentPane.add(pnlBtnLogin);
 		pnlBtnLogin.setLayout(null);
 		
 		JLabel lblLogin = new JLabel("LOGIN");
+		lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogin.setForeground(Color.WHITE);
-		lblLogin.setFont(new Font("Arial", Font.BOLD, 15));
-		lblLogin.setBounds(100, 12, 62, 26);
+		lblLogin.setFont(new Font("Arial", Font.BOLD, 20));
+		lblLogin.setBounds(85, 10, 77, 25);
 		pnlBtnLogin.add(lblLogin);
 		
 		JLabel lblX = new JLabel("X");
@@ -172,39 +171,77 @@ public class FrameLogin extends JFrame {
 			}
 		});
 		lblX.setForeground(Color.WHITE);
-		lblX.setFont(new Font("Arial", Font.BOLD, 15));
+		lblX.setFont(new Font("Arial", Font.BOLD, 20));
 		lblX.setHorizontalAlignment(SwingConstants.CENTER);
-		lblX.setBounds(580, 0, 20, 20);
+		lblX.setBounds(759, 0, 41, 40);
 		contentPane.add(lblX);
 		
 		JLabel logolabel = new JLabel("KNOCK");
 		logolabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		logolabel.setForeground(new Color(255, 69, 0));
-		logolabel.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
-		logolabel.setBounds(219, 59, 157, 63);
+		logolabel.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 29));
+		logolabel.setBounds(310, 143, 110, 28);
 		contentPane.add(logolabel);
 		
 		JLabel logolabel2 = new JLabel("KNOCK");
 		logolabel2.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		logolabel2.setForeground(Color.RED);
-		logolabel2.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
-		logolabel2.setBounds(278, 77, 157, 63);
+		logolabel2.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 29));
+		logolabel2.setBounds(392, 168, 157, 34);
 		contentPane.add(logolabel2);
 		lblloginMessage.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		lblloginMessage.setForeground(Color.RED);
 		lblloginMessage.setFont(new Font("Arial", Font.PLAIN, 15));
-		lblloginMessage.setBounds(150, 258, 305, 20);
+		lblloginMessage.setBounds(244, 228, 305, 20);
 		contentPane.add(lblloginMessage);
+		
+		JLabel newLabel = new JLabel("\uD68C\uC6D0\uAC00\uC785");
+		newLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		newLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				main.showFrameSignUp();
+			}
+		});
+		
+		newLabel.setForeground(Color.GRAY);
+		newLabel.setFont(new Font("���� ���", Font.PLAIN, 16));
+		newLabel.setBounds(360, 485, 84, 15);
+		contentPane.add(newLabel);
 		setLocationRelativeTo(null);
 		
 		
 		setVisible(true);
 	}
+	   
+	   public void contentSet() {
+	      String id = null;
+	      String pw = null;
+	      
+	      if(txtUserName.getText().equals("")||txtPassword.getText().equals(""))
+	         JOptionPane.showMessageDialog(this, "공백 없이 입력해 주세요.");
+	      else {
+	         id = txtUserName.getText();
+	         pw = txtPassword.getText();
+	      }
+	      signupdto.setRes_id(id);
+	      signupdto.setRes_pw(pw);
+	      
+	      boolean id_check= signupdao.Login(signupdto);
+	      if (id_check == true) {
+	         main.showFrameMain();
+	         FrameLogin.this.dispose();
+	      }
+	      
+	   }
+	
+	public void contentClear() {
+		txtUserName.setText("");
+		txtPassword.setText("");
+	}
 	
 	public void setMain(MainProcess main) {
 		this.main = main;
 	}
-	
-
 }

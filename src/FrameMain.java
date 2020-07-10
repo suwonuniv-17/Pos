@@ -22,16 +22,18 @@ public class FrameMain extends JFrame {
 	private FramePay fp;
 	
 	private JPanel contentPane;
-	private Image img_logo = new ImageIcon(FrameMain.class.getResource("reso/�ΰ�.png")).getImage().getScaledInstance(45,45, Image.SCALE_SMOOTH);
+	private Image img_logo = new ImageIcon(FrameMain.class.getResource("reso/logo.png")).getImage().getScaledInstance(45,45, Image.SCALE_SMOOTH);
 	private Image img_mypage = new ImageIcon(FrameMain.class.getResource("reso/mypage.png")).getImage().getScaledInstance(50,50, Image.SCALE_SMOOTH);
 	private Image img_setting = new ImageIcon(FrameMain.class.getResource("reso/setting.png")).getImage().getScaledInstance(50,50, Image.SCALE_SMOOTH);
 	private Image img_main = new ImageIcon(FrameMain.class.getResource("reso/main.png")).getImage().getScaledInstance(50,50, Image.SCALE_SMOOTH);
-
+	private Image img_menu = new ImageIcon(FrameMain.class.getResource("reso/icon.png")).getImage().getScaledInstance(50,50, Image.SCALE_SMOOTH);
+	
+	
 	private startPanel startP;
 	private mypagePanel mypageP;
 	private settingPanel settingP;
 	private mainPanel mainP;
-
+	private menuPanel menuP;
 
 
 	/**
@@ -53,14 +55,15 @@ public class FrameMain extends JFrame {
 		mypageP = new mypagePanel();
 		settingP = new settingPanel();
 		mainP = new mainPanel();
+		menuP = new menuPanel();
 
 
-		//�޴�
-		JPanel menuPanel = new JPanel();
-		menuPanel.setBackground(Color.ORANGE);
-		menuPanel.setBounds(0, 0, 134, 517);
-		contentPane.add(menuPanel);
-		menuPanel.setLayout(null);
+		//占쎈쐻占쎈솭占쎈솇占쎌굲
+		JPanel menu_Panel = new JPanel();
+		menu_Panel.setBackground(Color.ORANGE);
+		menu_Panel.setBounds(0, 0, 134, 517);
+		contentPane.add(menu_Panel);
+		menu_Panel.setLayout(null);
 		
 		
 		//Mypage Button
@@ -74,12 +77,12 @@ public class FrameMain extends JFrame {
 		});
 		myPage_Panel.setBackground(Color.ORANGE);
 		myPage_Panel.setBounds(0, 80, 137, 100);
-		menuPanel.add(myPage_Panel);
+		menu_Panel.add(myPage_Panel);
 		myPage_Panel.setLayout(null);
 		
 		JLabel mypageLabel = new JLabel("My Page");
 		mypageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		mypageLabel.setFont(new Font("���� ����", Font.BOLD, 18));
+		mypageLabel.setFont(new Font("占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�", Font.BOLD, 18));
 		mypageLabel.setForeground(SystemColor.text);
 		mypageLabel.setBounds(32, 62, 75, 28);
 		myPage_Panel.add(mypageLabel);
@@ -102,13 +105,13 @@ public class FrameMain extends JFrame {
 		});
 		setting_Panel.setBackground(Color.ORANGE);
 		setting_Panel.setBounds(0, 180, 137, 100);
-		menuPanel.add(setting_Panel);
+		menu_Panel.add(setting_Panel);
 		setting_Panel.setLayout(null);
 		
 		JLabel settingLabel = new JLabel("Setting");
 		settingLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		settingLabel.setForeground(Color.WHITE);
-		settingLabel.setFont(new Font("���� ����", Font.BOLD, 18));
+		settingLabel.setFont(new Font("占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�", Font.BOLD, 18));
 		settingLabel.setBounds(32, 62, 75, 28);
 		setting_Panel.add(settingLabel);
 		
@@ -128,14 +131,14 @@ public class FrameMain extends JFrame {
 			}
 		});
 		main_Panel.setBackground(Color.ORANGE);
-		main_Panel.setBounds(0, 280, 137, 100);
-		menuPanel.add(main_Panel);
+		main_Panel.setBounds(0, 377, 137, 100);
+		menu_Panel.add(main_Panel);
 		main_Panel.setLayout(null);
 		
 		JLabel mainLabel = new JLabel("Main");
 		mainLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		mainLabel.setForeground(Color.WHITE);
-		mainLabel.setFont(new Font("���� ����", Font.BOLD, 18));
+		mainLabel.setFont(new Font("占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�", Font.BOLD, 18));
 		mainLabel.setBounds(32, 62, 75, 28);
 		main_Panel.add(mainLabel);
 		
@@ -158,13 +161,13 @@ public class FrameMain extends JFrame {
 		});
 		startLogoPanel.setBackground(Color.ORANGE);
 		startLogoPanel.setBounds(0, 0, 137, 80);
-		menuPanel.add(startLogoPanel);
+		menu_Panel.add(startLogoPanel);
 		
 		JLabel titleLabel = new JLabel("KNOCK");
 		titleLabel.setBounds(9, 21, 69, 30);
 		startLogoPanel.add(titleLabel);
 		titleLabel.setForeground(new Color(255, 127, 80));
-		titleLabel.setFont(new Font("���� ����", Font.BOLD, 18));
+		titleLabel.setFont(new Font("占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�", Font.BOLD, 18));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JLabel titleLabel_1 = new JLabel("KNOCK");
@@ -172,14 +175,36 @@ public class FrameMain extends JFrame {
 		startLogoPanel.add(titleLabel_1);
 		titleLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel_1.setForeground(new Color(255, 99, 71));
-		titleLabel_1.setFont(new Font("���� ����", Font.BOLD, 18));
+		titleLabel_1.setFont(new Font("占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�", Font.BOLD, 18));
 		
-		//�˳� logo
-		JLabel iconLabel = new JLabel("");
-		iconLabel.setBounds(47, 430, 45, 45);
-		menuPanel.add(iconLabel);
-		iconLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		iconLabel.setIcon(new ImageIcon(img_logo));
+		
+		
+		//menu Button
+		JPanel mnPane = new JPanel();
+		mnPane.setLayout(null);
+		mnPane.addMouseListener(new PanelButtonMouseAdapter(mnPane){
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				menuCliked(menuP);
+			}	
+		});
+		mnPane.setBackground(Color.ORANGE);
+		mnPane.setBounds(0, 277, 137, 100);
+		menu_Panel.add(mnPane);
+		
+		JLabel mnLabel_1 = new JLabel("Menu");
+		mnLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		mnLabel_1.setForeground(Color.WHITE);
+		mnLabel_1.setFont(new Font("占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�", Font.BOLD, 18));
+		mnLabel_1.setBounds(32, 62, 75, 28);
+		mnPane.add(mnLabel_1);
+		
+		JLabel mnIconLabel = new JLabel("");
+		mnIconLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		mnIconLabel.setBounds(45, 10, 50, 50);
+		mnIconLabel.setIcon(new ImageIcon(img_menu));
+		mnPane.add(mnIconLabel);
 		
 		
 		//close button
@@ -207,7 +232,11 @@ public class FrameMain extends JFrame {
 		});
 		closeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		closeLabel.setForeground(Color.BLACK);
-		closeLabel.setFont(new Font("���� ����", Font.BOLD, 24));
+		closeLabel.setFont(new Font("占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�", Font.BOLD, 24));
+		
+		
+		
+		
 		
 		JPanel mainContentPanel = new JPanel();
 		mainContentPanel.setBounds(149, 10, 640, 497);
@@ -218,6 +247,8 @@ public class FrameMain extends JFrame {
 		mainContentPanel.add(mypageP);
 		mainContentPanel.add(settingP);
 		mainContentPanel.add(mainP);
+		mainContentPanel.add(menuP);
+		
 		
 		menuCliked(startP);
 		setVisible(true);
@@ -229,6 +260,8 @@ public class FrameMain extends JFrame {
 		mypageP.setVisible(false);
 		settingP.setVisible(false);
 		mainP.setVisible(false);
+		menuP.setVisible(false);
+		
 		setpanel.setVisible(true);
 	}
 	
@@ -245,7 +278,7 @@ public class FrameMain extends JFrame {
 		}
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			//Ŭ���� ���� ����
+			//占쎄깻占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲
 			panel.setBackground(new Color(218,165,32));
 		}
 
