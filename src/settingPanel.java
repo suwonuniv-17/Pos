@@ -14,16 +14,18 @@ import javax.swing.border.LineBorder;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import database.tableDTO;
+import database.User;
 import database.tableDAO;
 
 public class settingPanel extends JPanel {
 	private JButton [] tbtn;
-	private JTextPane textPane;
-	private JTextPane textPane_1;
-	private JTextPane textPane_2;
-	private JTextPane textPane_3;
+	private JTextField textPane;
+	private JTextField textPane_1;
+	private JTextField textPane_2;
+	private JTextField textPane_3;
 	private JPanel tablePanel;
 	tableDAO tabledao;
 	tableDTO tabledto;
@@ -31,7 +33,7 @@ public class settingPanel extends JPanel {
 	int two;
 	int four;
 	int many;
-	int check =0;
+	boolean load_check = false;
 	
 	public settingPanel() {
 		setBounds(0,0,640,497);
@@ -81,22 +83,22 @@ public class settingPanel extends JPanel {
 		add(numtabelLabel_1);
 		
 		//many
-		textPane = new JTextPane();
+		textPane = new JTextField(load(4));
 		textPane.setFont(new Font("���� ���", Font.PLAIN, 16));
 		textPane.setBounds(213, 128, 75, 28);
 		add(textPane);
 		//four
-		textPane_1 = new JTextPane();
+		textPane_1 = new JTextField(load(3));
 		textPane_1.setFont(new Font("���� ���", Font.PLAIN, 16));
 		textPane_1.setBounds(213, 210, 75, 28);
 		add(textPane_1);
 		//two
-		textPane_2 = new JTextPane();
+		textPane_2 = new JTextField(load(2));
 		textPane_2.setFont(new Font("���� ���", Font.PLAIN, 16));
 		textPane_2.setBounds(213, 300, 75, 28);
 		add(textPane_2);
 		//alone
-		textPane_3 = new JTextPane();
+		textPane_3 = new JTextField(load(1));
 		textPane_3.setFont(new Font("���� ���", Font.PLAIN, 16));
 		textPane_3.setBounds(213, 394, 75, 28);
 		add(textPane_3);
@@ -113,6 +115,8 @@ public class settingPanel extends JPanel {
 		tabelLabel.setFont(new Font("Dialog", Font.BOLD, 16));
 		tabelLabel.setBounds(442, 96, 70, 20);
 		add(tabelLabel);
+		inputTable();
+		
 		
 		JButton tableButton = new JButton("테이블 생성");
 		tableButton.addMouseListener(new MouseAdapter() {
@@ -123,7 +127,6 @@ public class settingPanel extends JPanel {
 				inputTable();
 				contentClear();
 			}
-
 		});
 		tableButton.setFont(new Font("Dialog", Font.BOLD, 16));
 		tableButton.setBounds(56, 445, 232, 40);
@@ -168,13 +171,37 @@ public class settingPanel extends JPanel {
 		panel_3.setBounds(17, 394, 27, 22);
 		add(panel_3);
 	}
+	public String load(int i) {
+		ArrayList<tableDTO> model = new ArrayList<tableDTO>();
+		model = tabledao.getLoad();
+		int count;
+		for(count = 0 ; count <model.size(); count++) {
+			alone = model.get(count).getalone();
+			two = model.get(count).gettwo();
+			four = model.get(count).getfour();
+			many = model.get(count).getmany();
+		}
+		if(count >0) {
+			load_check = true;
+		}
+		switch (i) {
+			case 1:
+				return Integer.toString(alone);
+			case 2: 
+				return Integer.toString(two);
+			case 3:
+				return Integer.toString(four);
+			case 4: 
+				return Integer.toString(many);
+			default :
+				return Integer.toString(0);
+		}
+	}
 	
 	
-	//
 	public void inputTable() {
 		int sum = many+four+two+alone;
-		 tbtn  = new JButton[sum];
-
+		tbtn  = new JButton[sum];
 
 		for(int i =0 ; i < sum ; i++) {
 			tbtn[i] = new JButton();
@@ -197,14 +224,9 @@ public class settingPanel extends JPanel {
 	
 	
 	public void resetTable() {
-		//Get the components in the panel
         Component[] componentList = tablePanel.getComponents();
-         //Loop through the components
          for(Component c : componentList){
-
-                //Find the components you want to remove
                 if(c instanceof JButton){
-                    //Remove it
              	   tablePanel.remove(c);
                 }
          }
@@ -214,8 +236,6 @@ public class settingPanel extends JPanel {
 	
 	
 	public void contentSet() {
-
-		
 		if(textPane.getText().equals("")||textPane_1.getText().equals("")||textPane_2.getText().equals("")||textPane_3.getText().equals(""))
 			JOptionPane.showMessageDialog(this, "공백 없이 입력해 주세요.");
 		else {
@@ -224,38 +244,28 @@ public class settingPanel extends JPanel {
 			two=Integer.parseInt(textPane_2.getText());
 			alone=Integer.parseInt(textPane_3.getText());
 		}
-		int res_code =0;
-	
-		tabledto.setcode7(res_code);
+		
 		tabledto.setmany(many);
 		tabledto.setfour(four);
 		tabledto.settwo(two);
 		tabledto.setalone(alone);
 		
-		if(check == 0) {
-			tabledao.Table(tabledto);	
-			check ++;
-		}
-		
-		else if(check>0){
+		if(load_check) {
 			tabledao.update(tabledto);
-			System.out.print(check);
 		}
-		
- 		res_code++;
+		else{
+			tabledao.Table(tabledto);	
+		}
 	}
 	
 	
 	public void contentReset() {
-
-		tabledto.setcode7(0);
 		tabledto.setmany(0);
 		tabledto.setfour(0);
 		tabledto.settwo(0);
 		tabledto.setalone(0);
-		
+
 		tabledao.update(tabledto);
-		
 	}
 	
 	public void contentClear() {
