@@ -27,6 +27,8 @@ public class menuPanel extends JPanel {
 	public int rownum;
 	
 	JScrollPane sc;
+	ArrayList<menuDTO> list = new ArrayList<menuDTO>();
+	static ArrayList<menuDTO> arr = new ArrayList<menuDTO>();
 	
 	Vector<String> userColumn;
 	DefaultTableModel model;
@@ -91,6 +93,9 @@ public class menuPanel extends JPanel {
 				addTable(nameText.getText(), costText.getText());
 				contentSet();
 				contentClear();
+				//저장된 메뉴 다시 load
+//				arr.clear();
+//				arr = menudao.loadMenu();
 				}
 		});
 		add(addButton);
@@ -106,13 +111,13 @@ public class menuPanel extends JPanel {
 	
 	//Table 占쏙옙 占쌩곤옙
 	public void loadTabel() {
-		ArrayList<menuDTO> list = new ArrayList<menuDTO>();
 		list = menudao.loadMenu();
 		for(rownum=0 ; rownum< list.size() ; rownum++) {
 			recode[0]=list.get(rownum).getManuname();
 			recode[1] = list.get(rownum).getMenuprice();
 			model.addRow(recode);
 		}
+		list.clear();
 	}
 	
 	public void addTable(String name, String price) {

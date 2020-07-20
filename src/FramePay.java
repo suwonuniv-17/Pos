@@ -3,6 +3,7 @@ import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,6 +21,8 @@ import java.awt.GridLayout;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import database.payDAO;
+import database.payDTO;
 
 import javax.swing.JTextField;
 
@@ -36,12 +39,15 @@ public class FramePay extends JFrame {
 	FramePack f_pack;
 	
 	private MainProcess mainprocess;
+	JPanel menuPanel_ ;
 	
+	payDTO paydto;
+	payDAO paydao;
 	public FramePay() {
 		
 		menuP = new menuPanel();
-		
-		
+		paydto = new payDTO();
+		paydao = new payDAO();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1080, 700);
@@ -134,22 +140,16 @@ public class FramePay extends JFrame {
 		
 		
 		//menuPanel�뜝�룞�삕 menuTable.rowCount()�뜝�룞�삕 �뜝�룞�삕�뜝�룞�삕�뜝�룞�삕 Button �뜝�룞�삕�뜝�룞�삕.  
-
-		JPanel menuPanel_ = new JPanel();
+		
+		menuPanel_ = new JPanel();
 		menuPanel_.setBorder(new LineBorder(new Color(0, 0, 0)));
 		menuPanel_.setBounds(508, 43, 560, 342);
 		contentPane.add(menuPanel_);
 		menuPanel_.setLayout(new GridLayout(5, 4));
+		this.menuButton();
 		
-		String [] str = new String[20];
-		JButton [] mbtn= new JButton[20];
-
-		for(int i =0 ; i < 20 ; i++) {
-			//str DB menu�뜝�룞�삕�뜝�룞�삕
-			//str[i] = (String) menuP.menuTable.getValueAt(i, 0);
-			mbtn[i] = new JButton(str[i]);
-			menuPanel_.add(mbtn[i]);
-		}
+		
+		
 		
 		JPanel payPanel = new JPanel();
 		payPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -248,5 +248,19 @@ public class FramePay extends JFrame {
 	
 	public void setMain(MainProcess mainprocess) {
 		this.mainprocess = mainprocess;
+	}
+	
+	public void menuButton() {
+		ArrayList<payDTO> menulist = new ArrayList<payDTO>();
+		menulist = paydao.loadMenu();
+		int menu_num = menulist.size();
+		String [] str = new String[menu_num];
+		JButton [] mbtn= new JButton[menu_num];
+
+		for(int i =0 ; i < menu_num ; i++) {
+			str[i]= menulist.get(i).getMenuname() + "     "+ menulist.get(i).getMenuprice();
+			mbtn[i] = new JButton(str[i]);
+			menuPanel_.add(mbtn[i]);
+		}
 	}
 }

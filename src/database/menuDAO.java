@@ -42,15 +42,13 @@ public class menuDAO {
    
    //로그인시 저장된 메뉴 로드
    public ArrayList<menuDTO> loadMenu() {
-	   ArrayList<menuDTO> list = new ArrayList<menuDTO>();
 	   Connection con=null;
 	     ResultSet rs=null;
 	     PreparedStatement pstmt = null;
-	     //DefaultTableModel model = new DefaultTableModel();
-	     
+	     ArrayList<menuDTO> list = new ArrayList<menuDTO>();
 	     try {
 	         con = getConn();
-	         String sql = "SELECT menuname, menuprice  FROM menu WHERE res_code2 = ?";
+	         String sql = "SELECT menuname, menuprice  FROM menu WHERE res_code2 = ? ORDER BY menuname ASC";
 	         pstmt = con.prepareStatement(sql);
 	         String code =User.getRes_code();
 	         pstmt.setString(1, code);
@@ -172,40 +170,6 @@ public class menuDAO {
       }
       return lists;
    }
-   
-   public Vector<menuDTO> GetAllSelectlist(){
-      Connection con = null;
-      PreparedStatement ps = null ;
-      ResultSet rs = null ;
-      String sql = "select * from menu";
-      Vector<menuDTO> lists = new Vector<menuDTO>();
-      
-      try {
-         con = getConn();
-         ps = con.prepareStatement(sql);
-         
-         rs = ps.executeQuery();
-         
-         while(rs.next()) {
-            menuDTO dto = new menuDTO();
-            dto.setManuname(rs.getString("menuname"));
-            dto.setMenuprice(rs.getString("menuprice"));
-            lists.add(dto);
-         }
-      }catch(SQLException e) {
-         e.printStackTrace();
-      }finally {
-         try {
-            if(rs != null) {rs.close(); }
-            if(ps != null) {ps.close(); }
-            con.close();
-         }catch(SQLException e2) {
-            e2.printStackTrace();
-         }
-      }
-      return lists;
-   }
-   
    
    
    public Object[][] makeArr(Vector<menuDTO> lists){
