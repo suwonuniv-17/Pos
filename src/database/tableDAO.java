@@ -38,6 +38,8 @@ public class tableDAO {
 		}
 		return con;
 	}
+	
+	//login시 table load
 	public ArrayList<tableDTO> getLoad(){
 		ArrayList<tableDTO> list = new ArrayList<tableDTO>();
 		Connection con=null;
@@ -75,10 +77,13 @@ public class tableDAO {
            }   
          return list;
 	}
+	
+	
+	
 	public void Table(tableDTO dto) {
 		
 		Connection con = null;
-		String sql = "insert into rtable (res_code7, alone, two, four, many) values (?,?,?,?,?)";
+		String sql = "insert into rtable (res_code7, alone, two, four, many) values ((SELECT res_code FROM restaurant WHERE res_code = ?),?,?,?,?)";
 		PreparedStatement ps = null;
 	
 		try {

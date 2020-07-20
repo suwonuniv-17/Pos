@@ -38,6 +38,7 @@ public class menuDAO {
       return con;
    }
    
+ 
    
    //로그인시 저장된 메뉴 로드
    public ArrayList<menuDTO> loadMenu() {
@@ -45,36 +46,35 @@ public class menuDAO {
 	   Connection con=null;
 	     ResultSet rs=null;
 	     PreparedStatement pstmt = null;
+	     //DefaultTableModel model = new DefaultTableModel();
 	     
-         try {
-      	   
-             con = getConn();
-             String sql = "SELECT menuname, menuprice  FROM menu WHERE res_code2 = ?";
-             pstmt = con.prepareStatement(sql);
-             String code =User.getRes_code();
-             pstmt.setString(1, code);
-             rs = pstmt.executeQuery();
-            
-             while(rs.next()) {
-            	 menuDTO dto = new menuDTO();
-                 dto.setManuname(rs.getString("menuname"));
-                 dto.setMenuprice(rs.getString("menuprice"));
-                 list.add(dto);
-             }
-            
-         } catch (Exception e) {
-             System.out.println("예외발생:deleteMember()=> "+e.getMessage());
-         }finally {
-             try {
-                 if(rs != null) rs.close();
-                 if(pstmt != null) pstmt.close();
-                 if(con != null) con.close(); 
-                 
-              }catch(SQLException e) {
-                 System.out.println(e.getMessage());
-              }      
-           }   
-         return list;
+	     try {
+	         con = getConn();
+	         String sql = "SELECT menuname, menuprice  FROM menu WHERE res_code2 = ?";
+	         pstmt = con.prepareStatement(sql);
+	         String code =User.getRes_code();
+	         pstmt.setString(1, code);
+	         rs = pstmt.executeQuery();
+	        
+	         while(rs.next()) {
+	        	 menuDTO dto = new menuDTO();
+	             dto.setManuname(rs.getString("menuname"));
+	             dto.setMenuprice(rs.getString("menuprice"));
+	             list.add(dto);
+	          }
+	     } catch (Exception e) {
+	         System.out.println("예외발생:deleteMember()=> "+e.getMessage());
+	     }finally {
+	         try {
+	             if(rs != null) rs.close();
+	             if(pstmt != null) pstmt.close();
+	             if(con != null) con.close(); 
+	             
+	          }catch(SQLException e) {
+	             System.out.println(e.getMessage());
+	          }      
+	       }   
+	     return list;
    }
    
    
@@ -205,6 +205,8 @@ public class menuDAO {
       }
       return lists;
    }
+   
+   
    
    public Object[][] makeArr(Vector<menuDTO> lists){
       Object[][] menuArr = new Object[lists.size()][2];

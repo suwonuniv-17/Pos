@@ -221,7 +221,7 @@ public class settingPanel extends JPanel {
 			}
 		}
 	}
-	
+	 
 	
 	public void resetTable() {
         Component[] componentList = tablePanel.getComponents();

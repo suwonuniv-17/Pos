@@ -25,12 +25,13 @@ public class menuPanel extends JPanel {
 	public JTextField costText;
 	public JTable menuTable;
 	public int rownum;
+	
 	JScrollPane sc;
 	
 	Vector<String> userColumn;
 	DefaultTableModel model;
 	Vector<String> userRow;
-	
+	Object recode[] = new Object[2];
 	menuDAO menudao;
 	menuDTO menudto;
 	
@@ -65,10 +66,11 @@ public class menuPanel extends JPanel {
 	
 		//Jtable 추가
 		userColumn = new Vector<String>();
-		userColumn.addElement("占쌨댐옙占싱몌옙");
-		userColumn.addElement("占쏙옙占쏙옙");
+		userColumn.addElement("name");
+		userColumn.addElement("price");
 		model = new DefaultTableModel(userColumn,0);
-
+		this.loadTabel();
+		
 		menuTable = new JTable(model);
 		menuTable.setToolTipText("");
 		menuTable.setFont(new Font("占쏙옙占쏙옙 占쏙옙占�", Font.PLAIN, 16));
@@ -76,11 +78,9 @@ public class menuPanel extends JPanel {
 		add(menuTable);
 		
 		
-		ArrayList<menuDTO> list = new ArrayList<menuDTO>();
-		list = menudao.loadMenu();
 		
+
 		
-		//占쌩곤옙 占쏙옙튼
 		JButton addButton = new JButton("\uCD94\uAC00");
 		addButton.setFont(new Font("占쏙옙占쏙옙 占쏙옙占�", Font.PLAIN, 20));
 		addButton.setBounds(443, 283, 125, 67);
@@ -88,13 +88,12 @@ public class menuPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
-				addTabel(nameText.getText(), costText.getText());
+				addTable(nameText.getText(), costText.getText());
 				contentSet();
 				contentClear();
 				}
 		});
 		add(addButton);
-		
 		
 		//占쏙옙占쏙옙 占쏙옙튼
 		JButton deleteButton = new JButton("\uC0AD\uC81C");
@@ -105,15 +104,23 @@ public class menuPanel extends JPanel {
 	
 	}
 	
-	
 	//Table 占쏙옙 占쌩곤옙
-	public void addTabel(String name, String cost) {
-		userRow = new Vector<String>();
-		userRow.addElement(name);
-		userRow.addElement(cost);
-		model.addRow(userRow);
+	public void loadTabel() {
+		ArrayList<menuDTO> list = new ArrayList<menuDTO>();
+		list = menudao.loadMenu();
+		for(rownum=0 ; rownum< list.size() ; rownum++) {
+			recode[0]=list.get(rownum).getManuname();
+			recode[1] = list.get(rownum).getMenuprice();
+			model.addRow(recode);
+		}
 	}
 	
+	public void addTable(String name, String price) {
+		Object[] user = new Object[2];
+		user[0] = name;
+		user[1] = name;
+		model.addRow(user);
+	}
 	
 		
 	public void contentSet() {
@@ -126,7 +133,6 @@ public class menuPanel extends JPanel {
 			menuname = nameText.getText();
 			menuprice = costText.getText();
 		}
-		
 		menudto.setManuname(menuname);
 		menudto.setMenuprice(menuprice);
 		
@@ -137,7 +143,5 @@ public class menuPanel extends JPanel {
 		nameText.setText("");
 		costText.setText("");
 	}
-	
-	
 }
 
