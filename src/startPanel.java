@@ -23,7 +23,7 @@ public class startPanel extends JPanel {
 		lblNewLabel.setBounds(130, 45, 400, 95);
 		lblNewLabel.setForeground(Color.ORANGE);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 41));
+		lblNewLabel.setFont(new Font("í•œì»´ ê³ ë”•", Font.BOLD, 41));
 		
 		JLabel label = new JLabel("");
 		label.setBounds(412, 6, 229, 158);
@@ -41,19 +41,19 @@ public class startPanel extends JPanel {
 		lblTip.setBounds(253, 239, 136, 26);
 		lblTip.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTip.setForeground(Color.DARK_GRAY);
-		lblTip.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 16));
+		lblTip.setFont(new Font("í•œì»´ ê³ ë”•", Font.PLAIN, 16));
 		
 		JLabel lblTip_1 = new JLabel("1. \uB300\uAE30\uBA85\uB2E8\uACFC \uD3EC\uC7A5\uC8FC\uBB38 \uAC04\uD3B8 \uD655\uC778 \uAC00\uB2A5");
 		lblTip_1.setBounds(118, 290, 400, 36);
 		lblTip_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTip_1.setForeground(Color.DARK_GRAY);
-		lblTip_1.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 16));
+		lblTip_1.setFont(new Font("í•œì»´ ê³ ë”•", Font.PLAIN, 16));
 		
 		JLabel lblTip_2 = new JLabel("2. \uB9E4\uCD9C\uD604\uD669\uC744 \uD55C\uB208\uC5D0 \uD655\uC778 \uAC00\uB2A5");
 		lblTip_2.setBounds(213, 334, 229, 36);
 		lblTip_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTip_2.setForeground(Color.DARK_GRAY);
-		lblTip_2.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 16));
+		lblTip_2.setFont(new Font("í•œì»´ ê³ ë”•", Font.PLAIN, 16));
 		setLayout(null);
 		add(lblNewLabel);
 		add(label);

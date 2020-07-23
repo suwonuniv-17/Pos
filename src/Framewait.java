@@ -38,7 +38,7 @@ public class Framewait extends JFrame {
 		
 		JLabel lblKnockKnockWait = new JLabel("Knock Knock WAIT");
 		lblKnockKnockWait.setForeground(Color.WHITE);
-		lblKnockKnockWait.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 20));
+		lblKnockKnockWait.setFont(new Font("í•œì»´ ê³ ë”•", Font.BOLD, 20));
 		lblKnockKnockWait.setBounds(12, 0, 218, 31);
 		panel.add(lblKnockKnockWait);
 		
@@ -62,7 +62,7 @@ public class Framewait extends JFrame {
 		});
 		closeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		closeLabel.setForeground(Color.BLACK);
-		closeLabel.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 24));
+		closeLabel.setFont(new Font("í•œì»´ ê³ ë”•", Font.BOLD, 24));
 		closeLabel.setBounds(470, -3, 16, 33);
 		panel.add(closeLabel);
 		
@@ -81,7 +81,7 @@ public class Framewait extends JFrame {
 		contentPane.add(table);
 		
 		JButton delButton = new JButton("\uB300\uAE30 \uC644\uB8CC");
-		delButton.setFont(new Font("±¼¸²", Font.BOLD, 25));
+		delButton.setFont(new Font("í•œì»´ ê³ ë”•", Font.BOLD, 25));
 		delButton.setBounds(33, 628, 433, 42);
 		contentPane.add(delButton);
 		

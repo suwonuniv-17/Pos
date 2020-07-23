@@ -82,7 +82,7 @@ public class FrameMain extends JFrame {
 		
 		JLabel mypageLabel = new JLabel("My Page");
 		mypageLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		mypageLabel.setFont(new Font("占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�", Font.BOLD, 18));
+		mypageLabel.setFont(new Font("한컴 고딕", Font.BOLD, 18));
 		mypageLabel.setForeground(SystemColor.text);
 		mypageLabel.setBounds(32, 62, 75, 28);
 		myPage_Panel.add(mypageLabel);
@@ -111,7 +111,7 @@ public class FrameMain extends JFrame {
 		JLabel settingLabel = new JLabel("Setting");
 		settingLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		settingLabel.setForeground(Color.WHITE);
-		settingLabel.setFont(new Font("占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�", Font.BOLD, 18));
+		settingLabel.setFont(new Font("한컴 고딕", Font.BOLD, 18));
 		settingLabel.setBounds(32, 62, 75, 28);
 		setting_Panel.add(settingLabel);
 		
@@ -138,7 +138,7 @@ public class FrameMain extends JFrame {
 		JLabel mainLabel = new JLabel("Main");
 		mainLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		mainLabel.setForeground(Color.WHITE);
-		mainLabel.setFont(new Font("占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�", Font.BOLD, 18));
+		mainLabel.setFont(new Font("한컴 고딕", Font.BOLD, 18));
 		mainLabel.setBounds(32, 62, 75, 28);
 		main_Panel.add(mainLabel);
 		
@@ -167,7 +167,7 @@ public class FrameMain extends JFrame {
 		titleLabel.setBounds(9, 21, 69, 30);
 		startLogoPanel.add(titleLabel);
 		titleLabel.setForeground(new Color(255, 127, 80));
-		titleLabel.setFont(new Font("占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�", Font.BOLD, 18));
+		titleLabel.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 18));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JLabel titleLabel_1 = new JLabel("KNOCK");
@@ -175,7 +175,7 @@ public class FrameMain extends JFrame {
 		startLogoPanel.add(titleLabel_1);
 		titleLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel_1.setForeground(new Color(255, 99, 71));
-		titleLabel_1.setFont(new Font("占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�", Font.BOLD, 18));
+		titleLabel_1.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 18));
 		
 		
 		
@@ -196,7 +196,7 @@ public class FrameMain extends JFrame {
 		JLabel mnLabel_1 = new JLabel("Menu");
 		mnLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
 		mnLabel_1.setForeground(Color.WHITE);
-		mnLabel_1.setFont(new Font("占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�", Font.BOLD, 18));
+		mnLabel_1.setFont(new Font("한컴 고딕", Font.BOLD, 18));
 		mnLabel_1.setBounds(32, 62, 75, 28);
 		mnPane.add(mnLabel_1);
 		
@@ -232,7 +232,7 @@ public class FrameMain extends JFrame {
 		});
 		closeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		closeLabel.setForeground(Color.BLACK);
-		closeLabel.setFont(new Font("占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻�뜝占�", Font.BOLD, 24));
+		closeLabel.setFont(new Font("한컴 고딕", Font.BOLD, 24));
 		
 		
 		
@@ -278,7 +278,6 @@ public class FrameMain extends JFrame {
 		}
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			//占쎄깻占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲 占쎈쐻占쎈짗占쎌굲占쎈쐻占쎈짗占쎌굲
 			panel.setBackground(new Color(218,165,32));
 		}
 

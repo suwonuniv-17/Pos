@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class payDAO {
-	
+   
    private static final String DRIVER = "com.mysql.jdbc.Driver";
    private static final String URL = "jdbc:mysql://js06m13.cafe24.com/js06m13";
    private static final String USER = "js06m13";
@@ -36,38 +36,76 @@ public class payDAO {
    
    
    //저장된 메뉴 로드
-   public ArrayList<payDTO> loadMenu() {
-	   Connection con=null;
-	   ResultSet rs=null;
-	   PreparedStatement pstmt = null;
-	   ArrayList<payDTO> list = new ArrayList<payDTO>();
-	   try {
-	       con = getConn();
-	       String sql = "SELECT menuname, menuprice  FROM menu WHERE res_code2 = ? ORDER BY menuname ASC";
-	       pstmt = con.prepareStatement(sql);
-	       String code =User.getRes_code();
-	       pstmt.setString(1, code);
-	       rs = pstmt.executeQuery();
-	       
-	       while(rs.next()) {
-	    	   payDTO dto = new payDTO();
-	           dto.setMenuname(rs.getString("menuname"));
-	           dto.setMenuprice(rs.getString("menuprice"));
-	           list.add(dto);
-	        }
-	       
-	     } catch (Exception e) {
-	         System.out.println("예외발생:deleteMember()=> "+e.getMessage());
-	     }finally {
-	         try {
-	             if(rs != null) rs.close();
-	             if(pstmt != null) pstmt.close();
-	             if(con != null) con.close(); 
-	             
-	          }catch(SQLException e) {
-	             System.out.println(e.getMessage());
-	          }      
-	       }   
-	     return list;
+   public ArrayList<payDTO> getMenu() {
+      Connection con=null;
+      ResultSet rs=null;
+      PreparedStatement pstmt = null;
+      ArrayList<payDTO> list = new ArrayList<payDTO>();
+      try {
+          con = getConn();
+          String sql = "SELECT menuname, menuprice  FROM menu WHERE res_code2 = ? ORDER BY menuname ASC";
+          pstmt = con.prepareStatement(sql);
+          String code =User.getRes_code();
+          pstmt.setString(1, code);
+          rs = pstmt.executeQuery();
+          
+          while(rs.next()) {
+             payDTO dto = new payDTO();
+              dto.setMenuname(rs.getString("menuname"));
+              dto.setMenuprice(rs.getString("menuprice"));
+              list.add(dto);
+           }
+          
+        } catch (Exception e) {
+            System.out.println("예외발생:deleteMember()=> "+e.getMessage());
+        }finally {
+            try {
+                if(rs != null) rs.close();
+                if(pstmt != null) pstmt.close();
+                if(con != null) con.close(); 
+                
+             }catch(SQLException e) {
+                System.out.println(e.getMessage());
+             }      
+          }   
+        return list;
+   }
+   
+   public ArrayList<payDTO> getTable(){
+      ArrayList<payDTO> list = new ArrayList<payDTO>();
+      Connection con=null;
+       ResultSet rs=null;
+       PreparedStatement pstmt = null;
+       
+       try {
+           con = getConn();
+           String sql = "SELECT alone, two, four, many  FROM rtable WHERE res_code7 = ?";
+           pstmt = con.prepareStatement(sql);
+           String code =User.getRes_code();
+           pstmt.setString(1, code);
+           rs = pstmt.executeQuery();
+           
+            while(rs.next()) {
+               payDTO dto = new payDTO();
+                dto.setalone(Integer.parseInt(rs.getString("alone")));
+                dto.settwo(Integer.parseInt(rs.getString("two")));
+                dto.setfour(Integer.parseInt(rs.getString("four")));
+                dto.setmany(Integer.parseInt(rs.getString("many")));
+                list.add(dto);
+            }
+           
+        } catch (Exception e) {
+            System.out.println("예외발생:deleteMember()=> "+e.getMessage());
+        }finally {
+            try {
+                if(rs != null) rs.close();
+                if(pstmt != null) pstmt.close();
+                if(con != null) con.close(); 
+                
+             }catch(SQLException e) {
+                System.out.println(e.getMessage());
+             }      
+          }   
+        return list;
    }
 }

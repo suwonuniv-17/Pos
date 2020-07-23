@@ -206,7 +206,7 @@ public class FrameLogin extends JFrame {
 		});
 		
 		newLabel.setForeground(Color.GRAY);
-		newLabel.setFont(new Font("���� ���", Font.PLAIN, 16));
+		newLabel.setFont(new Font("한컴 고딕", Font.PLAIN, 16));
 		newLabel.setBounds(360, 485, 84, 15);
 		contentPane.add(newLabel);
 		setLocationRelativeTo(null);

@@ -91,42 +91,42 @@ public class FrameSignUp extends JFrame {
 		JLabel newLabel = new JLabel("\uAC00\uAC8C \uC774\uB984 :");
 		newLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		newLabel.setForeground(Color.DARK_GRAY);
-		newLabel.setFont(new Font("占쏙옙占쏙옙 占쏙옙占�", Font.PLAIN, 16));
+		newLabel.setFont(new Font("한컴 고딕", Font.PLAIN, 16));
 		newLabel.setBounds(65, 263, 84, 15);
 		contentPane.add(newLabel);
 		
 		JLabel newLabel_1 = new JLabel("\uC804\uD654\uBC88\uD638 :");
 		newLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
 		newLabel_1.setForeground(Color.DARK_GRAY);
-		newLabel_1.setFont(new Font("占쏙옙占쏙옙 占쏙옙占�", Font.PLAIN, 16));
+		newLabel_1.setFont(new Font("한컴 고딕", Font.PLAIN, 16));
 		newLabel_1.setBounds(65, 398, 84, 15);
 		contentPane.add(newLabel_1);
 		
 		JLabel newLabel_2 = new JLabel("\uAC00\uAC8C \uC704\uCE58 :");
 		newLabel_2.setHorizontalAlignment(SwingConstants.LEFT);
 		newLabel_2.setForeground(Color.DARK_GRAY);
-		newLabel_2.setFont(new Font("占쏙옙占쏙옙 占쏙옙占�", Font.PLAIN, 16));
+		newLabel_2.setFont(new Font("한컴 고딕", Font.PLAIN, 16));
 		newLabel_2.setBounds(65, 327, 84, 15);
 		contentPane.add(newLabel_2);
 		
 		JLabel newLabel_3 = new JLabel("\uC601\uC5C5 \uC2DC\uAC04 :");
 		newLabel_3.setHorizontalAlignment(SwingConstants.LEFT);
 		newLabel_3.setForeground(Color.DARK_GRAY);
-		newLabel_3.setFont(new Font("占쏙옙占쏙옙 占쏙옙占�", Font.PLAIN, 16));
+		newLabel_3.setFont(new Font("한컴 고딕", Font.PLAIN, 16));
 		newLabel_3.setBounds(65, 468, 84, 15);
 		contentPane.add(newLabel_3);
 		
 		JLabel lblId = new JLabel("ID :");
 		lblId.setHorizontalAlignment(SwingConstants.LEFT);
 		lblId.setForeground(Color.DARK_GRAY);
-		lblId.setFont(new Font("占쏙옙占쏙옙 占쏙옙占�", Font.PLAIN, 16));
+		lblId.setFont(new Font("한컴 고딕", Font.PLAIN, 16));
 		lblId.setBounds(65, 124, 84, 15);
 		contentPane.add(lblId);
 		
 		JLabel lblPw = new JLabel("PW :");
 		lblPw.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPw.setForeground(Color.DARK_GRAY);
-		lblPw.setFont(new Font("占쏙옙占쏙옙 占쏙옙占�", Font.PLAIN, 16));
+		lblPw.setFont(new Font("한컴 고딕", Font.PLAIN, 16));
 		lblPw.setBounds(65, 173, 84, 15);
 		contentPane.add(lblPw);
 		
@@ -136,7 +136,7 @@ public class FrameSignUp extends JFrame {
 		System.out.print("signup Frame load success");
 		
 		JButton signupButton = new JButton("\uD68C\uC6D0\uAC00\uC785");
-		signupButton.setFont(new Font("占쏙옙占쏙옙 占쏙옙占�", Font.PLAIN, 14));
+		signupButton.setFont(new Font("한컴 고딕", Font.PLAIN, 14));
 		signupButton.setBounds(175, 530, 97, 23);
 		signupButton.addActionListener(new ActionListener() {
 			@Override
@@ -188,7 +188,7 @@ public class FrameSignUp extends JFrame {
 		contentPane.add(timetextField);
 		
 		JButton checkButton = new JButton("중복체크");
-		checkButton.setFont(new Font("Dialog", Font.PLAIN, 12));
+		checkButton.setFont(new Font("한컴 고딕", Font.PLAIN, 12));
 		checkButton.setBounds(283, 122, 93, 23);
 		checkButton.addActionListener(new ActionListener() {
 			@Override

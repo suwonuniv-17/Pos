@@ -156,17 +156,17 @@ public class signupDAO {
                signupDTO member = FindById(id);
                 
                  if(member == null){
-                    JOptionPane.showMessageDialog(null,"�벑濡앸릺吏� �븡�� ID�엯�땲�떎.");
+                    JOptionPane.showMessageDialog(null,"id나 password가 틀렸습니다.");
                     return false;
                  }
                  else if(member.getRes_pw().equals(pw)) {
-                    JOptionPane.showMessageDialog(null,"[" + member.getRes_id() + "]�떂猿섏꽌 濡쒓렇�씤 �븯�뀲�뒿�땲�떎.");
+                    JOptionPane.showMessageDialog(null,"[" + member.getRes_id() + "]님이 로그인하셨습니다.");
                     getMember(id);
                     
                     return true;
                  }
                  else {
-                    JOptionPane.showMessageDialog(null,"鍮꾨�踰덊샇媛� ���졇�뒿�땲�떎.");
+                    JOptionPane.showMessageDialog(null,"회원정보가 없습니다");
                     return false;
                  }
                  

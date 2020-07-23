@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Vector;
+import database.User;
 
 import javax.swing.table.DefaultTableModel;
 
@@ -42,37 +43,37 @@ public class menuDAO {
    
    //로그인시 저장된 메뉴 로드
    public ArrayList<menuDTO> loadMenu() {
-	   Connection con=null;
-	     ResultSet rs=null;
-	     PreparedStatement pstmt = null;
-	     ArrayList<menuDTO> list = new ArrayList<menuDTO>();
-	     try {
-	         con = getConn();
-	         String sql = "SELECT menuname, menuprice  FROM menu WHERE res_code2 = ? ORDER BY menuname ASC";
-	         pstmt = con.prepareStatement(sql);
-	         String code =User.getRes_code();
-	         pstmt.setString(1, code);
-	         rs = pstmt.executeQuery();
-	        
-	         while(rs.next()) {
-	        	 menuDTO dto = new menuDTO();
-	             dto.setManuname(rs.getString("menuname"));
-	             dto.setMenuprice(rs.getString("menuprice"));
-	             list.add(dto);
-	          }
-	     } catch (Exception e) {
-	         System.out.println("예외발생:deleteMember()=> "+e.getMessage());
-	     }finally {
-	         try {
-	             if(rs != null) rs.close();
-	             if(pstmt != null) pstmt.close();
-	             if(con != null) con.close(); 
-	             
-	          }catch(SQLException e) {
-	             System.out.println(e.getMessage());
-	          }      
-	       }   
-	     return list;
+      Connection con=null;
+        ResultSet rs=null;
+        PreparedStatement pstmt = null;
+        ArrayList<menuDTO> list = new ArrayList<menuDTO>();
+        try {
+            con = getConn();
+            String sql = "SELECT menuname, menuprice  FROM menu WHERE res_code2 = ? ORDER BY menuname ASC";
+            pstmt = con.prepareStatement(sql);
+            String code =User.getRes_code();
+            pstmt.setString(1, code);
+            rs = pstmt.executeQuery();
+           
+            while(rs.next()) {
+               menuDTO dto = new menuDTO();
+                dto.setManuname(rs.getString("menuname"));
+                dto.setMenuprice(rs.getString("menuprice"));
+                list.add(dto);
+             }
+        } catch (Exception e) {
+            System.out.println("예외발생:deleteMember()=> "+e.getMessage());
+        }finally {
+            try {
+                if(rs != null) rs.close();
+                if(pstmt != null) pstmt.close();
+                if(con != null) con.close(); 
+                
+             }catch(SQLException e) {
+                System.out.println(e.getMessage());
+             }      
+          }   
+        return list;
    }
    
    
@@ -110,17 +111,17 @@ public class menuDAO {
    }
    
    
-   public boolean deleteMenu (String menuname, String menuprice) {
-      boolean ok = false;
+   public void deleteMenu (String menuname) {
+      //boolean ok = false;
       Connection con = null;
       PreparedStatement ps = null;
       
       try {
          con = getConn();
-         String sql = "delete menu where menuname=? and menuprice=?";
+         String sql = "delete from menu where menuname=? and res_code2=?";
          ps = con.prepareStatement(sql);
          ps.setString(1, menuname);
-         ps.setString(2, menuprice);
+         ps.setString(2, User.getRes_code());
          int r = ps.executeUpdate(); //실행 -> 삭제
          
          
@@ -134,7 +135,7 @@ public class menuDAO {
             System.out.println(e.getMessage());
          }
       }
-      return ok;
+      //return ok;
    }
    
    public Vector<menuDTO> Getsellcount(){ //오늘 판매된 메뉴

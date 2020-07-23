@@ -17,8 +17,8 @@ public class mainPanel extends JPanel {
 		payLabel.setBounds(278, 209, 60, 27);
 		payLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		payLabel.setForeground(Color.ORANGE);
-		payLabel.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 20));
+		payLabel.setFont(new Font("í•œì»´ ê³ ë”•", Font.BOLD, 20));
 		add(payLabel);
 	}
-
+	
 }

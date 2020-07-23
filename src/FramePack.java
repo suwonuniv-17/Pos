@@ -40,7 +40,7 @@ public class FramePack extends JFrame {
 		
 		JLabel lblKnockKnockPackage = new JLabel("Knock Knock Package");
 		lblKnockKnockPackage.setForeground(Color.WHITE);
-		lblKnockKnockPackage.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 20));
+		lblKnockKnockPackage.setFont(new Font("í•œì»´ ê³ ë”•", Font.BOLD, 20));
 		lblKnockKnockPackage.setBounds(12, 0, 218, 31);
 		panel.add(lblKnockKnockPackage);
 		
@@ -64,7 +64,7 @@ public class FramePack extends JFrame {
 		});
 		closeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		closeLabel.setForeground(Color.BLACK);
-		closeLabel.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 24));
+		closeLabel.setFont(new Font("í•œì»´ ê³ ë”•", Font.BOLD, 24));
 		closeLabel.setBounds(484, -3, 16, 33);
 		panel.add(closeLabel);
 		
@@ -83,7 +83,7 @@ public class FramePack extends JFrame {
 		contentPane.add(table);
 		
 		JButton finButton = new JButton("\uD3EC\uC7A5 \uC644\uB8CC");
-		finButton.setFont(new Font("±¼¸²", Font.BOLD, 20));
+		finButton.setFont(new Font("í•œì»´ ê³ ë”•", Font.BOLD, 20));
 		finButton.setBounds(34, 636, 426, 41);
 		contentPane.add(finButton);
 
