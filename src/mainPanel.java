@@ -10,9 +10,9 @@ public class mainPanel extends JPanel {
 	 * Create the panel.
 	 */
 	public mainPanel() {
-		setBounds(0,0,640,497);
+		setBounds(0, 0, 640, 497);
 		setLayout(null);
-		
+
 		JLabel payLabel = new JLabel("\uACB0\uC81C\uCC3D");
 		payLabel.setBounds(278, 209, 60, 27);
 		payLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -20,5 +20,5 @@ public class mainPanel extends JPanel {
 		payLabel.setFont(new Font("한컴 고딕", Font.BOLD, 20));
 		add(payLabel);
 	}
-	
+
 }
