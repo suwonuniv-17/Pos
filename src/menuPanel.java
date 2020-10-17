@@ -40,12 +40,12 @@ public class menuPanel extends JPanel {
 		menudto = new menuDTO();
 
 		JLabel lblNewLabel = new JLabel("\uC774\uB984 :");
-		lblNewLabel.setFont(new Font("占쏙옙占쏙옙 占쏙옙占 ", Font.PLAIN, 16));
+		lblNewLabel.setFont(new Font("한컴 고딕 ", Font.PLAIN, 16));
 		lblNewLabel.setBounds(388, 58, 57, 15);
 		add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("\uAC00\uACA9 :");
-		lblNewLabel_1.setFont(new Font("占쏙옙占쏙옙 占쏙옙占 ", Font.PLAIN, 16));
+		lblNewLabel_1.setFont(new Font("한컴 고딕 ", Font.PLAIN, 16));
 		lblNewLabel_1.setBounds(388, 115, 57, 15);
 		add(lblNewLabel_1);
 
@@ -68,12 +68,12 @@ public class menuPanel extends JPanel {
 
 		menuTable = new JTable(model);
 		menuTable.setToolTipText("");
-		menuTable.setFont(new Font("占쏙옙占쏙옙 占쏙옙占 ", Font.PLAIN, 16));
+		menuTable.setFont(new Font("한컴 고딕 ", Font.PLAIN, 16));
 		menuTable.setBounds(12, 22, 355, 465);
 		add(menuTable);
 
 		JButton addButton = new JButton("\uCD94\uAC00");
-		addButton.setFont(new Font("占쏙옙占쏙옙 占쏙옙占 ", Font.PLAIN, 20));
+		addButton.setFont(new Font("한컴 고딕 ", Font.PLAIN, 20));
 		addButton.setBounds(443, 283, 125, 67);
 		addButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -91,7 +91,7 @@ public class menuPanel extends JPanel {
 
 		// 占쏙옙占쏙옙 占쏙옙튼
 		JButton deleteButton = new JButton("\uC0AD\uC81C");
-		deleteButton.setFont(new Font("占쏙옙占쏙옙 占쏙옙占 ", Font.PLAIN, 20));
+		deleteButton.setFont(new Font("한컴고딕", Font.PLAIN, 20));
 		deleteButton.setBounds(443, 369, 125, 68);
 		deleteButton.addMouseListener(new MouseAdapter() {
 

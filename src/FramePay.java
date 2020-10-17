@@ -27,6 +27,7 @@ import java.awt.GridLayout;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import database.menuDTO;
 import database.payDAO;
 import database.payDTO;
 
@@ -41,63 +42,78 @@ public class FramePay extends JFrame {
 			.getScaledInstance(23, 30, Image.SCALE_SMOOTH);
 
 	private JTable payListTable;
-	private JTextField togetTextField;
+	private JTextField getTextField;
 	JPanel menuPanel_;
 	JPanel tablePanel;
-
+	JLabel totalcostLabel;
+	int totalPrice = 0;
+	int getPrice=0;
+	//class 호출 
 	private MainProcess mainprocess;
 	payDTO paydto;
 	payDAO paydao;
 	Framewait f_wait;
 	FramePack f_pack;
 	menuPanel menuP;
-
+	
+	
+	//table, menu 버튼 동적 생성 변수
 	int table_num;
 	int menu_num;
 	JButton[] mbtn;
 	JButton[] mbtn_menu;
 	JButton tableButton;
-
 	String[] str_menu;
 	String[] menuCount;
 	String tablebuttonIndex;
 	String menuName;
-
-	int i = 0;
-	int rownum;
-	Vector<String> userColumn;
-	DefaultTableModel model;
-	Object recode[] = new Object[3];
+	String menuPrice;
+	
 	JPanel payPanel = new JPanel();
+	
+	//payList
+	ArrayList<payDTO> list = new ArrayList<payDTO>();
+	int rownum;
+	Object recode[]= new Object[3];
+	DefaultTableModel payModel;
+	Vector<String> userColumn;
+	
+	//table 선택시 action
 	ActionListener tableListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			model.setNumRows(0);
 			System.out.println(e);
 			System.out.print("\n" + e.getSource() + "\n");
 
+			payModel.setNumRows(0);
+			
 			tableButton = (JButton) e.getSource();
 			tablebuttonIndex = tableButton.getText().split("\\(")[0];
+			JOptionPane.showMessageDialog(null, ""+tablebuttonIndex+"번 테이블 선택");
+
+			paydto.setTablenum(Integer.parseInt(tablebuttonIndex));
+			totalPrice = paydao.totalPrice(paydto);
+			totalcostLabel.setText(""+totalPrice);
 			loadTabel();
-			
 		}
 	};
 	
 	
+	//menu 선택시 action
 	ActionListener menuListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int count = 1;
 			JButton menuButton = (JButton) e.getSource();
-
-			menuName = menuButton.getText().split("[0-9]")[0];
-			paydto.setTablenum(Integer.parseInt(tablebuttonIndex));
-			paydto.setMenucode(menuName);
-			paydto.setMenucount(count);
-			paydao.insertMenu(paydto);
 			
-			loadTabel();
+			menuName = menuButton.getText().split("[0-9]")[0];
+			menuPrice = menuButton.getText().replaceAll("[^0-9]","");
+			paydto.setMenucode(menuName);
+			paydto.setMenuprice(menuPrice);
+			paydao.insertMenu(paydto);		
+			totalPrice = paydao.totalPrice(paydto);
+			totalcostLabel.setText(""+totalPrice);
+			addMenu(menuName,menuPrice);
 		}
 
 	};
@@ -131,7 +147,7 @@ public class FramePay extends JFrame {
 				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to close this application?",
 						"Confirmation", JOptionPane.YES_NO_OPTION) == 0) {
 					FramePay.this.dispose();
-					paydao.deleteDB();
+					paydao.exit();
 				}
 			}
 
@@ -201,15 +217,16 @@ public class FramePay extends JFrame {
 		contentPane.add(tablePanel);
 		this.inputTable();
 
+		
+		
 		// menuPanel 뜝 룞 삕 menuTable.rowCount() 뜝 룞 삕 뜝 룞 삕 뜝 룞 삕 뜝 룞 삕 Button 뜝 룞 삕 뜝 룞
 		// 삕.
-
 		menuPanel_ = new JPanel();
 		menuPanel_.setBorder(new LineBorder(new Color(0, 0, 0)));
 		menuPanel_.setBounds(508, 43, 560, 342);
 		contentPane.add(menuPanel_);
 		menuPanel_.setLayout(new GridLayout(5, 4));
-		this.menuButton();
+		this.inputMenu();
 
 		
 		payPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -218,20 +235,19 @@ public class FramePay extends JFrame {
 		payPanel.setLayout(null);
 		
 		
+		
 		// Jtable 추가
 		userColumn = new Vector<String>();
-		userColumn.addElement("메뉴");
-		userColumn.addElement("수량");
-		userColumn.addElement("가격");
-		model = new DefaultTableModel(userColumn, 0);
+		userColumn.addElement("name");
+		userColumn.addElement("price");
+		payModel = new DefaultTableModel(userColumn, 0);
+		this.loadTabel();
+	
 		
-		
-		payListTable = new JTable(model);
-		payListTable.setModel(new DefaultTableModel(new Object[][] { { null, null, null }, { null, null, null }, },
-				new String[] { "\uBA54\uB274", "\uC218\uB7C9", "\uAC00\uACA9" }));
-		payListTable.getColumnModel().getColumn(0).setPreferredWidth(92);
-		payListTable.getColumnModel().getColumn(1).setPreferredWidth(50);
-		payListTable.getColumnModel().getColumn(2).setPreferredWidth(86);
+		payListTable = new JTable(payModel);
+//		payListTable.getColumnModel().getColumn(0).setPreferredWidth(92);
+//		payListTable.getColumnModel().getColumn(1).setPreferredWidth(50);
+//		payListTable.getColumnModel().getColumn(2).setPreferredWidth(86);
 		payListTable.setBounds(12, 42, 294, 243);
 		payPanel.add(payListTable);
 		
@@ -276,37 +292,81 @@ public class FramePay extends JFrame {
 		JLabel lblNewLabel_1_3_4 = new JLabel("\uAC70\uC2A4\uB984\uB3C8 :");
 		lblNewLabel_1_3_4.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_3_4.setFont(new Font("한컴 고딕", Font.BOLD, 20));
-		lblNewLabel_1_3_4.setBounds(321, 175, 93, 22);
+		lblNewLabel_1_3_4.setBounds(318, 175, 93, 22);
 		payPanel.add(lblNewLabel_1_3_4);
 
-		togetTextField = new JTextField();
-		togetTextField.setBounds(423, 89, 96, 21);
-		payPanel.add(togetTextField);
-		togetTextField.setColumns(10);
-
-		JLabel totalcostLabel = new JLabel("0");
+		getTextField = new JTextField();
+		getTextField.setBounds(419, 87, 84, 21);
+		payPanel.add(getTextField);
+		getTextField.setColumns(10);
+		
+		
+	
+		
+		totalcostLabel = new JLabel(""+totalPrice);
 		totalcostLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		totalcostLabel.setFont(new Font("한컴 고딕", Font.BOLD, 20));
+		totalcostLabel.setFont(new Font("한컴 고딕", Font.BOLD, 18));
 		totalcostLabel.setBounds(423, 33, 93, 22);
 		payPanel.add(totalcostLabel);
 
 		JLabel togetLabel = new JLabel("0");
 		togetLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		togetLabel.setFont(new Font("한컴 고딕", Font.BOLD, 20));
+		togetLabel.setFont(new Font("한컴 고딕", Font.BOLD, 18));
 		togetLabel.setBounds(423, 131, 93, 22);
 		payPanel.add(togetLabel);
 
 		JLabel changeLabel = new JLabel("0");
 		changeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		changeLabel.setFont(new Font("한컴 고딕", Font.BOLD, 20));
-		changeLabel.setBounds(426, 175, 93, 22);
+		changeLabel.setFont(new Font("한컴 고딕", Font.BOLD, 18));
+		changeLabel.setBounds(423, 175, 93, 22);
 		payPanel.add(changeLabel);
-
-		JButton btnNewButton = new JButton("\uACB0\uC81C");
-		btnNewButton.setFont(new Font("한컴 고딕", Font.BOLD, 24));
-		btnNewButton.setBounds(348, 228, 183, 57);
-		payPanel.add(btnNewButton);
-
+		
+		
+		//결제버튼
+		JButton paymentButton = new JButton("\uACB0\uC81C");
+		paymentButton.setFont(new Font("한컴 고딕", Font.BOLD, 24));
+		paymentButton.setBounds(318, 228, 230, 57);
+		paymentButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				paydao.complatePayment(tablebuttonIndex);
+				payModel.setRowCount(0);
+				getTextField.setText("");
+				togetLabel.setText("0");
+				changeLabel.setText("0");
+				totalcostLabel.setText("0");
+			}
+			
+		});
+		payPanel.add(paymentButton);
+		
+		
+		
+		//계산버튼
+		JButton calculateButton = new JButton("계산");
+		calculateButton.setFont(new Font("한컴 고딕", Font.PLAIN, 13));
+		calculateButton.setBounds(488, 131, 60, 66);
+		calculateButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				getPrice = Integer.parseInt(getTextField.getText());
+				if(getPrice > totalPrice) {
+					changeLabel.setText(""+(getPrice - totalPrice));
+					togetLabel.setText("0");
+				}
+				else {
+					togetLabel.setText(""+(totalPrice-getPrice));
+					totalPrice -=getPrice;
+					getTextField.setText("0");
+				}
+			}
+		});
+		payPanel.add(calculateButton);
+		
+		
+		
 		setVisible(true);
 	}
 
@@ -314,7 +374,7 @@ public class FramePay extends JFrame {
 		this.mainprocess = mainprocess;
 	}
 
-	public void menuButton() {
+	public void inputMenu() {
 		ArrayList<payDTO> menulist = new ArrayList<payDTO>();
 		menulist = paydao.getMenu();
 		menu_num = menulist.size();
@@ -400,23 +460,22 @@ public class FramePay extends JFrame {
 	}
 
 	
-	
 	public void loadTabel() {
-		ArrayList<payDTO> list = new ArrayList<payDTO>();
-		paydto.setTablenum(Integer.parseInt(tablebuttonIndex));
-		list = paydao.loadMenu(paydto);
-
+		list = paydao.load_tableMenu(paydto);
 		for (rownum = 0; rownum < list.size(); rownum++) {
 			recode[0] = list.get(rownum).getMenuname();
-			recode[1] = list.get(rownum).getMenucount();
-			recode[2] = list.get(rownum).getMenuprice();
-			model.addRow(recode);
+			recode[1] = list.get(rownum).getMenuprice();
+			recode[2] = 1;
+			payModel.addRow(recode);
 		}
-		
 		list.clear();
-		
+	}
+
+	public void addMenu(String name, String price) {
+		Object[] user = new Object[2];
+		user[0] = name;
+		user[1] = price;
+		payModel.addRow(user);
 	}
 	
-	
-
 }

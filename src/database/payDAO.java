@@ -121,7 +121,7 @@ public class payDAO {
 	// table별 메뉴 삽입
 	public void insertMenu(payDTO dto) {
 		Connection con = null;
-		String sql = "INSERT INTO tablemenu (tablenum,menucount,menu_code2) VALUES (?,?,(SELECT menu_code FROM menu WHERE menuname = ? ))";
+		String sql = "INSERT INTO tablemenu (tablenum,menucount,menu_code2,res_code8) VALUES (?,?,(SELECT menu_code FROM menu WHERE menuname = ?),?)";
 		PreparedStatement ps = null;
 
 		int res_code2 = Integer.parseInt(User.getRes_code());
@@ -131,9 +131,9 @@ public class payDAO {
 			ps = con.prepareStatement(sql);
 
 			ps.setInt(1, dto.getTablenum());
-			ps.setInt(2, dto.getMenucount());
+			ps.setInt(2,1);
 			ps.setString(3, dto.getMenucode());
-
+			ps.setInt(4, res_code2);
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -152,7 +152,7 @@ public class payDAO {
 	}
 	
 	//table별 저장된 메뉴 로드
-	public ArrayList<payDTO> loadMenu(payDTO d) {
+	public ArrayList<payDTO> load_tableMenu(payDTO d) {
 		Connection con = null;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
@@ -162,8 +162,8 @@ public class payDAO {
 			con = getConn();
 			String sql = "SELECT menuprice, menuname FROM menu WHERE menu_code IN (select menu_code2 from tablemenu where tablenum=?)";
 			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setString(1,Integer.toString(d.getTablenum()));
+			String str = Integer.toString(d.getTablenum());
+			pstmt.setString(1,str);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -188,95 +188,23 @@ public class payDAO {
 				System.out.println(e.getMessage());
 			}
 		}
-		return list;
+ 		return list;
 	}
 	
-	/*
-	public int menuCount(payDTO d) {
+	
+	//DB 내용 삭제(종료시)
+	public void exit() {
 		Connection con = null;
 		ResultSet rs = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			con = getConn();
-			String sql = "SELECT * from tablemenu where menu_code2 = (SELECT menu_code FROM menu WHERE menuname = ?) and tablenum =?";
+			String sql = "delete from tablemenu where res_code8 =?";
+			int res_code2 = Integer.parseInt(User.getRes_code());
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1,d.getMenucode());
-			pstmt.setString(2, Integer.toString(d.getTablenum()));
-			rs = pstmt.executeQuery();
 			
-			if(rs.next()) {
-				pstmt.setString(1, d.getMenuname());
-				pstmt.setString(2, Integer.toString(count));
-				pstmt.setString(3, d.getMenucode());
-				
-				pstmt.executeUpdate();
-				count++;
-			}
-			else {
-				insertMenu(d);
-			}
-		} catch(Exception e) {
-			
-		}finally {
-			
-		}
-		return count;
-	}
-	
-	//menucount 
-	public int menu_count(payDTO d) {
-		Connection con = null;
-		ResultSet rs = null;
-		PreparedStatement pstmt = null;
-		int count=1;
-		String a= null;
-		String b = null;
-		
-		try {
-			con = getConn();
-			String sql = "SELECT menu_code2, COUNT(*) as menunum FROM tablemenu WHERE tablenum = ? GROUP BY tablenum HAVING menu_code2 = (SELECT menu_code FROM menu WHERE menuname = ?)";
-			pstmt = con.prepareStatement(sql);
-			a =Integer.toString(d.getTablenum());
-			b= d.getMenucode();
-			pstmt.setString(1,Integer.toString(d.getTablenum()));
-			pstmt.setString(2,d.getMenucode());
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				payDTO dto = new payDTO();
-				dto.setMenucount(Integer.parseInt(rs.getString("menunum")));			
-				count= dto.getMenucount();
-			}
-		} catch (Exception e) {
-			System.out.println("예외발생:menu_count()=> " + e.getMessage());
-		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (con != null)
-					con.close();
-
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		return count;
-	}
-	*/
-	
-	//DB 내용 삭제
-	public void deleteDB() {
-		Connection con = null;
-		ResultSet rs = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			con = getConn();
-			String sql = "TRUNCATE tablemenu";
-			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, res_code2);
 			pstmt.executeUpdate();
 
 		} catch (Exception e) {
@@ -296,5 +224,73 @@ public class payDAO {
 		}
 	}
 	
+	//db 튜플 삭제(결제시)
+	public void complatePayment(String tablenum) {
+		Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = getConn();
+			String sql = "delete from tablemenu where tablenum =?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, tablenum);
+			pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			System.out.println("예외발생:menu_count()=> " + e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
 	
+	public int totalPrice(payDTO d) {
+		Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		ArrayList<payDTO> list = new ArrayList<payDTO>();
+		int total=0;
+		int price=0;
+		try {
+			con = getConn();
+			String sql = "SELECT menuprice, menuname FROM menu WHERE menu_code IN (select menu_code2 from tablemenu where tablenum=?)";
+			pstmt = con.prepareStatement(sql);
+			String str = Integer.toString(d.getTablenum());
+			pstmt.setString(1,str);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				payDTO dto = new payDTO();
+				price = Integer.parseInt(rs.getString("menuprice"));
+				total += price;
+			}
+		} catch (Exception e) {
+			System.out.println("예외발생:loadMenu()=> " + e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+ 		return total;
+	}
 }
