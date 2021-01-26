@@ -16,6 +16,7 @@ public class payDAO {
 	private static final String USER = "js06m13";
 	private static final String PASS = "mcjoojh0562!";
 	int count=1;
+	int res_code2 = Integer.parseInt(User.getRes_code());
 	// DB 연결
 	public Connection getConn() {
 
@@ -35,6 +36,8 @@ public class payDAO {
 		}
 		return con;
 	}
+	
+	
 
 	// 저장된 메뉴 로드
 	public ArrayList<payDTO> getMenu() {
@@ -121,19 +124,21 @@ public class payDAO {
 	// table별 메뉴 삽입
 	public void insertMenu(payDTO dto) {
 		Connection con = null;
-		String sql = "INSERT INTO tablemenu (tablenum,menucount,menu_code2,res_code8) VALUES (?,?,(SELECT menu_code FROM menu WHERE menuname = ?),?)";
+		String sql = "INSERT INTO tablemenu (tablenum,menucount,menu_code2,res_code8,headcount) VALUES (?,?,(SELECT menu_code FROM menu WHERE menuname = ? and res_code2 =?),?,?)";
 		PreparedStatement ps = null;
 
-		int res_code2 = Integer.parseInt(User.getRes_code());
+		
 
 		try {
 			con = getConn();
 			ps = con.prepareStatement(sql);
 
 			ps.setInt(1, dto.getTablenum());
-			ps.setInt(2,1);
-			ps.setString(3, dto.getMenucode());
+			ps.setInt(2,dto.getMenucount());
+			ps.setString(3, dto.getMenuname());
 			ps.setInt(4, res_code2);
+			ps.setInt(5, res_code2);
+			ps.setInt(6,dto.getHeadcount());
 			ps.executeUpdate();
 
 		} catch (SQLException e) {
@@ -160,10 +165,11 @@ public class payDAO {
 		
 		try {
 			con = getConn();
-			String sql = "SELECT menuprice, menuname FROM menu WHERE menu_code IN (select menu_code2 from tablemenu where tablenum=?)";
+			String sql = "SELECT menuprice, menuname FROM menu WHERE menu_code IN (select menu_code2 from tablemenu where tablenum=? and res_code8 =?)";
 			pstmt = con.prepareStatement(sql);
 			String str = Integer.toString(d.getTablenum());
 			pstmt.setString(1,str);
+			pstmt.setInt(2,res_code2);
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
@@ -191,6 +197,49 @@ public class payDAO {
  		return list;
 	}
 	
+/*
+	//menu 수량 확인
+	public int countMenu(payDTO d) {
+		int count =1;
+		Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		ArrayList<payDTO> list = new ArrayList<payDTO>();
+		
+		try {
+			con = getConn();
+			String sql = "select count(*) from tablemenu where tablenum =? and  menu_code2 = (select menu_code from menu where menuname =? and res_code2 =?)  ";
+			pstmt = con.prepareStatement(sql);
+			
+			String str = Integer.toString(d.getTablenum());
+			pstmt.setString(1,str);
+			pstmt.setString(2,d.getMenuname());
+			pstmt.setString(3, Integer.toString(res_code2));
+			
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			System.out.println("예외발생:countMenu()=> " + e.getMessage());
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return count;
+	}
+	
+	*/
 	
 	//DB 내용 삭제(종료시)
 	public void exit() {
@@ -265,14 +314,14 @@ public class payDAO {
 		int price=0;
 		try {
 			con = getConn();
-			String sql = "SELECT menuprice, menuname FROM menu WHERE menu_code IN (select menu_code2 from tablemenu where tablenum=?)";
+			String sql = "SELECT menuprice, menuname FROM menu WHERE menu_code IN (select menu_code2 from tablemenu where tablenum=? and res_code8 =?)";
 			pstmt = con.prepareStatement(sql);
 			String str = Integer.toString(d.getTablenum());
 			pstmt.setString(1,str);
+			pstmt.setInt(2, res_code2);
 			rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				payDTO dto = new payDTO();
 				price = Integer.parseInt(rs.getString("menuprice"));
 				total += price;
 			}

@@ -68,6 +68,7 @@ public class payDTO {
 	
 	private int Tablenum;
 	private int Menucount;
+	private int Headcount;
 	private String Menucode;
 	   
 	public String getMenucode() {
@@ -89,5 +90,10 @@ public class payDTO {
 	   Menucount = menucount;
 	}
 	   
-	
+	public int getHeadcount() {
+	   return Headcount;
+	}
+	public void setHeadcount(int headcount) {
+		Headcount = headcount;
+	}
 }
