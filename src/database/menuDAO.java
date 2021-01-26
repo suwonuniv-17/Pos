@@ -17,7 +17,7 @@ public class menuDAO {
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://js06m13.cafe24.com/js06m13";
 	private static final String USER = "js06m13";
-	private static final String PASS = "mcjoojh0562!";
+	private static final String PASS = "비밀번호";
 
 	// DB 뿰寃 硫붿냼 뱶
 	public Connection getConn() {
